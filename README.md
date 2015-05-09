@@ -17,7 +17,7 @@
 ----
 ### Installation
     sudo pip install misaka
-    sudo pip install xthml2pdf
+    sudo pip install xhtml2pdf
 
 ### Usage
     python app.py
