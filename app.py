@@ -2,20 +2,9 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from io import BytesIO
-
 import tornado.ioloop
 import tornado.web
 
-import misaka
-import xhtml2pdf.pisa as pisa
-
-#解决中文字体
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-pdfmetrics.registerFont(TTFont('msyh', './msyh.ttf'))
-from xhtml2pdf import default
-default.DEFAULT_FONT["helvetica"]="msyh"
 
 class BaseHandler(tornado.web.RequestHandler):
     """docstring for BaseHandler"""
@@ -45,6 +34,16 @@ class root(BaseHandler):
             sys.setdefaultencoding('utf-8')
             try:
                 html = misaka.html(filedata)
+                from io import BytesIO
+                import misaka
+                import xhtml2pdf.pisa as pisa
+                #解决中文字体
+                from reportlab.pdfbase import pdfmetrics
+                from reportlab.pdfbase.ttfonts import TTFont
+                pdfmetrics.registerFont(TTFont('msyh', './msyh.ttf'))
+                from xhtml2pdf import default
+                default.DEFAULT_FONT["helvetica"]="msyh"
+                
                 buffer = BytesIO()
                 pdf = pisa.CreatePDF(html,buffer)
                 pdf = buffer.getvalue()
